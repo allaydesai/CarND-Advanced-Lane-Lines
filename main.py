@@ -8,33 +8,18 @@ from moviepy.editor import VideoFileClip
 mtx, dist = helperFunction.get_camera_calibation()
 
 def process(frame):
-
-
     frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-
-
-
-
-
     undistorted_img = cv2.undistort(frame,mtx, dist, None, mtx)
-
 #    cv2.imwrite('output_images/undistorted_img.jpg',undistorted_img)
-
     img_size = (undistorted_img.shape[1], undistorted_img.shape[0])
-
-
     trans_mat = helperFunction.get_prespective(undistorted_img)
-
     inv_trans_mat = helperFunction.get_prespective(undistorted_img, unwrapped = True)
-
     warped_img = cv2.warpPerspective(undistorted_img, trans_mat,img_size,cv2.INTER_LINEAR )
 
 #    plt.imshow(undistorted_img)
 #    plt.show()
-#
 #    plt.imshow(warped_img)
 #    plt.show()
-
 #    cv2.imwrite('output_images/warped_img.jpg',warped_img)
 #
     thresh_img = helperFunction.combined_thresholds(warped_img)
